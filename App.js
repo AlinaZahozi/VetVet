@@ -5,6 +5,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from 'react';
 import { EditVetProfile } from './screens';
 import BottomTabNav from './navigations/BottomTabNav';
+import Rating from './screens/Rating';
+import NumberOfClients from './screens/NumberOfClients';
+import ShareTip from './screens/ShareTip';
+import UpdateAvailability from './screens/UpdateAvailability';
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
@@ -45,6 +49,22 @@ export default function App() {
           options={{
             headerShown: false
           }}
+        />
+        <Stack.Screen
+          name="Rating"
+          component={Rating}
+        />
+        <Stack.Screen
+          name="NumberOfClients"
+          component={NumberOfClients}
+        />
+        <Stack.Screen
+          name="ShareTip"
+          component={ShareTip}
+        />
+        <Stack.Screen
+          name="UpdateAvailability"
+          component={UpdateAvailability}
         />
       </Stack.Navigator>
     </NavigationContainer>

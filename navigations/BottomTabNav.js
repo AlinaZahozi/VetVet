@@ -8,7 +8,9 @@ import {
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { COLORS } from "../constants";
-import { Create, Home, Messages, VetProfile, Settings } from "../screens";
+import { VetProfile } from "../screens";
+import { ViewTips } from "../screens";
+import { Entypo } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,87 +24,28 @@ const screenOptions = {
     right: 0,
     left: 0,
     elevation: 0,
-    height: 60,
-    backgroundColor: COLORS.white,
+    height: 80,
+    backgroundColor: COLORS.secondaryGray,
   },
 };
 const BottomTabNav = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="ViewTips"
+        component={ViewTips}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <SimpleLineIcons
-                name="home"
-                size={24}
+              <Entypo
+                name="light-bulb" 
+                size={24} 
                 color={focused ? COLORS.primary : COLORS.black}
               />
             );
           },
         }}
       />
-
-      <Tab.Screen
-        name="Messages"
-        component={Messages}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <MaterialCommunityIcons
-                name="message-text-outline"
-                size={24}
-                color={focused ? COLORS.primary : COLORS.black}
-              />
-            );
-          },
-        }}
-      />
-
-      <Tab.Screen
-        name="Create"
-        component={Create}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: COLORS.primary,
-                  height: Platform.OS == "ios" ? 50 : 60,
-                  width: Platform.OS == "ios" ? 50 : 60,
-                  top: Platform.OS == "ios" ? -10 : -20,
-                  borderRadius: Platform.OS == "ios" ? 25 : 30,
-                  borderWidth: 2,
-                  borderColor: COLORS.white,
-                }}
-              >
-                <Fontisto name="plus-a" size={24} color={COLORS.white} />
-              </View>
-            );
-          },
-        }}
-      />
-
-      <Tab.Screen
-        name="Settings"
-        component={Settings}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <MaterialIcons
-                name="settings"
-                size={24}
-                color={focused ? COLORS.primary : COLORS.black}
-              />
-            );
-          },
-        }}
-      />
-
       <Tab.Screen
         name="VetProfile"
         component={VetProfile}
@@ -111,7 +54,7 @@ const BottomTabNav = () => {
             return (
               <MaterialIcons
                 name="person-outline"
-                size={24}
+                size={30}
                 color={focused ? COLORS.primary : COLORS.black}
               />
             );

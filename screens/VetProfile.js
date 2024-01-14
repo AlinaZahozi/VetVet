@@ -3,11 +3,38 @@ import { View, Text, Image, TouchableOpacity, useWindowDimensions, SafeAreaView 
 import { COLORS, FONTS, SIZES, images } from '../constants';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import EditVetProfile from "./EditVetProfile";
+import Rating from './Rating';
+import NumberOfClients from './NumberOfClients';
+import ShareTip from './ShareTip';
+import UpdateAvailability from './UpdateAvailability'
 
 
 const VetProfile = () => {
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
+    const navigation = useNavigation();
+
+    const EditVetProfileClick = () => {
+      navigation.navigate(EditVetProfile);
+    };
+
+    const RatingClick = () => {
+        navigation.navigate(Rating);
+    };
+
+    const ClientClick = () => {
+        navigation.navigate(NumberOfClients);
+    };
+
+     const ShareTipClick = () => {
+        navigation.navigate(ShareTip);
+    };
+
+    const UpdateAvailabilityClick = () => {
+        navigation.navigate(UpdateAvailability);
+    };
 
     // Replace these values with actual data
     const phoneNumber = '053-4324453';
@@ -32,6 +59,7 @@ const VetProfile = () => {
                     backgroundColor: COLORS.primary,
                     borderRadius: 10,
                 }}
+                onPress={EditVetProfileClick}
             >
                 <MaterialIcons name='edit' size={24} color={COLORS.white} />
             </TouchableOpacity>
@@ -78,7 +106,9 @@ const VetProfile = () => {
                         backgroundColor: COLORS.gray,
                         borderRadius: 10,
                         padding: 10,
-                    }}>
+                    }}
+                    onPress={RatingClick}
+                    >
                         <Text style={{ ...FONTS.h3, color: 'black' }}>
                             {vetRating}
                         </Text>
@@ -94,7 +124,9 @@ const VetProfile = () => {
                         backgroundColor: COLORS.gray,
                         borderRadius: 10,
                         padding: 10,
-                    }}>
+                    }}
+                    onPress={ClientClick}
+                    >
                         <Text style={{ ...FONTS.h3, color: 'black' }}>
                             {clientsCount}
                         </Text>
@@ -137,6 +169,7 @@ const VetProfile = () => {
                         marginBottom: 20,
                         marginTop: 20,
                     }}
+                    onPress={ShareTipClick}
                 >
                     <Text style={{ ...FONTS.h4, color: COLORS.white }}>
                         Share Tips
@@ -153,6 +186,7 @@ const VetProfile = () => {
                       borderRadius: 10,
                       marginBottom: 20,
                     }}
+                    onPress={UpdateAvailabilityClick}
                 >
                     <Text style={{ ...FONTS.h4, color: COLORS.white }}>
                         Update Availability
