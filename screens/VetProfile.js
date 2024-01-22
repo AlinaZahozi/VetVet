@@ -1,39 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, useWindowDimensions, SafeAreaView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, useWindowDimensions, SafeAreaView, ScrollView, Switch, StyleSheet} from 'react-native';
 import { COLORS, FONTS, SIZES, images } from '../constants';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import EditVetProfile from "./EditVetProfile";
-import Rating from './Rating';
-import NumberOfClients from './NumberOfClients';
+import ViewVetProfile from "./ViewVetProfile";
 import ShareTip from './ShareTip';
-import UpdateAvailability from './UpdateAvailability'
 
 
 const VetProfile = () => {
-    const layout = useWindowDimensions();
-    const [index, setIndex] = useState(0);
     const navigation = useNavigation();
+    const [isAvailable, setIsAvailable] = useState(false);
+    
+    const toggleSwitch = () => setIsAvailable(previousState => !previousState);
 
     const EditVetProfileClick = () => {
       navigation.navigate(EditVetProfile);
     };
 
-    const RatingClick = () => {
-        navigation.navigate(Rating);
-    };
-
-    const ClientClick = () => {
-        navigation.navigate(NumberOfClients);
-    };
-
      const ShareTipClick = () => {
         navigation.navigate(ShareTip);
-    };
-
-    const UpdateAvailabilityClick = () => {
-        navigation.navigate(UpdateAvailability);
     };
 
     // Replace these values with actual data
@@ -43,9 +30,44 @@ const VetProfile = () => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            <StatusBar backgroundColor={COLORS.gray} />
-
-            <View style={{ flex: 1, alignItems: 'center' }}>
+        <StatusBar backgroundColor={COLORS.gray} />
+        <ScrollView style={{ flex: 1 }}>
+        <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity 
+                style={{
+                    position: 'absolute',
+                    left: 20,
+                    top: 20,
+                    zIndex: 1,
+                    width: 36,
+                    height: 36,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 10,
+                }}
+                    onPress={() => navigation.navigate(ViewVetProfile)}
+                >
+                <MaterialIcons name='remove-red-eye' size={24} color={COLORS.white} />
+             </TouchableOpacity>
+                {/* Edit Profile Button */}
+                <TouchableOpacity 
+                    style={{
+                        position: 'absolute',
+                        right: 20,
+                        top: 20,
+                        zIndex: 1,
+                        width: 36,
+                        height: 36,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: COLORS.primary,
+                        borderRadius: 10,
+                    }}
+                    onPress={EditVetProfileClick}
+                >
+                    <MaterialIcons name='edit' size={24} color={COLORS.white} />
+            </TouchableOpacity>
               <TouchableOpacity 
                 style={{
                     position: 'absolute',
@@ -99,41 +121,23 @@ const VetProfile = () => {
                 </View>
 
                 <View style={{ paddingVertical: 8, flexDirection: 'row' }}>
-                    <TouchableOpacity style={{
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        marginHorizontal: SIZES.padding,
-                        backgroundColor: COLORS.gray,
-                        borderRadius: 10,
-                        padding: 10,
-                    }}
-                    onPress={RatingClick}
-                    >
-                        <Text style={{ ...FONTS.h3, color: 'black' }}>
-                            {vetRating}
-                        </Text>
-                        <Text style={{ ...FONTS.body4, color: 'black' }}>
-                            Rating
-                        </Text>
-                    </TouchableOpacity>
+                        <View style={styles.infoBox}>
+                            <Text style={{ ...FONTS.h3, color: 'black' }}>
+                                {'4.8/5'} {/* Replace with actual rating */}
+                            </Text>
+                            <Text style={{ ...FONTS.body4, color: 'black' }}>
+                                Rating
+                            </Text>
+                        </View>
 
-                    <TouchableOpacity style={{
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        marginHorizontal: SIZES.padding,
-                        backgroundColor: COLORS.gray,
-                        borderRadius: 10,
-                        padding: 10,
-                    }}
-                    onPress={ClientClick}
-                    >
-                        <Text style={{ ...FONTS.h3, color: 'black' }}>
-                            {clientsCount}
-                        </Text>
-                        <Text style={{ ...FONTS.body4, color: 'black' }}>
-                            Clients
-                        </Text>
-                    </TouchableOpacity>
+                        <View style={styles.infoBox}>
+                            <Text style={{ ...FONTS.h3, color: 'black' }}>
+                                {'+200'} {/* Replace with actual clients count */}
+                            </Text>
+                            <Text style={{ ...FONTS.body4, color: 'black' }}>
+                                Clients
+                            </Text>
+                        </View>
                 </View>
 
                 {/* About Section */}
@@ -176,26 +180,54 @@ const VetProfile = () => {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity 
-                    style={{
-                      width: '90%',
-                      height: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: COLORS.primary,
-                      borderRadius: 10,
-                      marginBottom: 20,
-                    }}
-                    onPress={UpdateAvailabilityClick}
-                >
-                    <Text style={{ ...FONTS.h4, color: COLORS.white }}>
-                        Update Availability
+                {/* Availability Switch */}
+                <View style={styles.availabilityContainer}>
+                    <Text style={{ ...FONTS.h4, color: COLORS.black, marginRight: 10 }}>
+                        {isAvailable ? 'Available' : 'Unavailable'}
                     </Text>
-                </TouchableOpacity>
-
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#FFA500" }}
+                        thumbColor={isAvailable ? "#FFFFFF" : "#FFFFFF"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleSwitch}
+                        value={isAvailable}
+                    />
+                </View>
             </View>
+        </ScrollView>
         </SafeAreaView>
     );
 };
+
+const styles = StyleSheet.create({
+    button: {
+        width: '90%',
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: COLORS.primary,
+        borderRadius: 10,
+        marginBottom: 20,
+    },
+    availabilityContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '90%',
+        height: 40,
+        padding: 10,
+        marginVertical: 20,
+        backgroundColor: COLORS.lightGray,
+        borderRadius: 10,
+    },
+    infoBox: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginHorizontal: SIZES.padding,
+        backgroundColor: COLORS.gray,
+        borderRadius: 10,
+        padding: 10,
+    },
+});
 
 export default VetProfile;

@@ -9,6 +9,7 @@ import Rating from './screens/Rating';
 import NumberOfClients from './screens/NumberOfClients';
 import ShareTip from './screens/ShareTip';
 import UpdateAvailability from './screens/UpdateAvailability';
+import ViewVetProfile from "./screens/ViewVetProfile";
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
@@ -65,6 +66,10 @@ export default function App() {
         <Stack.Screen
           name="UpdateAvailability"
           component={UpdateAvailability}
+        />
+        <Stack.Screen
+          name="ViewVetProfile"
+          component={ViewVetProfile}
         />
       </Stack.Navigator>
     </NavigationContainer>
